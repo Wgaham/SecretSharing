@@ -2,8 +2,9 @@ package com.wgaham.secretsharing;
 
 /**
  * 主页面列表的构建类
+ *
  * @author Wgaham
- * Created by zh on 2018/3/13.
+ *         Created by Wgaham on 2018/3/13.
  */
 
 public class Secretlist {

@@ -11,8 +11,9 @@ import java.util.List;
 
 /**
  * 主页面列表的适配器
+ *
  * @author Wgaham
- * Created by zh on 2018/3/13.
+ *         Created by Wgaham on 2018/3/13.
  */
 
 public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.ViewHolder> {
@@ -36,16 +37,16 @@ public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(mContext==null){
-            mContext=parent.getContext();
+        if (mContext == null) {
+            mContext = parent.getContext();
         }
-        View view= LayoutInflater.from(mContext).inflate(R.layout.secret_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.secret_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Secretlist secretlist=mSecretlists.get(position);
+        Secretlist secretlist = mSecretlists.get(position);
         holder.secretName.setText(secretlist.getName());
     }
 
