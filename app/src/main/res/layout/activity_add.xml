@@ -7,7 +7,7 @@
     tools:layout_editor_absoluteY="25dp">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/add_toorbar"
+        android:id="@+id/add_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -18,33 +18,14 @@
         android:id="@+id/secret_name_editText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="96dp"
         android:ems="10"
         android:hint="@string/secretname_hint"
         android:inputType="text"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_toorbar" />
-
-    <TextView
-        android:id="@+id/start_time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
-        android:text="@string/start_time"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/end_time_text"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.659"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secret_name_editText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/add_toolbar" />
 
     <TextView
         android:id="@+id/start_time"
@@ -52,51 +33,33 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="TextView"
+        android:text="重构开始时间"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        tools:layout_editor_absoluteY="258dp" />
-
-    <TextView
-        android:id="@+id/end_time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/end_time"
-        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/start_time_set"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.659"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="341dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/end_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        android:text="TextView"
+        android:layout_marginLeft="16dp"
+        android:text="重构结束时间"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/next_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/start_time"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/end_time_set"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="167dp" />
+        app:layout_constraintGuide_begin="231dp" />
 
     <Button
-        android:id="@+id/next_button"
+        android:id="@+id/member"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -104,5 +67,43 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/start_time_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="设置"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/secret_name_editText" />
+
+    <Button
+        android:id="@+id/end_time_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="设置"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/start_time_set" />
+
+    <EditText
+        android:id="@+id/secret_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:maxLength="4"
+        android:ems="4"
+        android:hint="@string/secret_hint"
+        android:inputType="number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/end_time_set" />
 
 </android.support.constraint.ConstraintLayout>

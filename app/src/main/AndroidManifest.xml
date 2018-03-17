@@ -20,7 +20,9 @@
         <activity
             android:name=".AddActivity"
             android:label="@string/add_title" />
-        <activity android:name=".MemberAddActivity"></activity>
+        <activity
+            android:name=".MemberAddActivity"
+            android:label="@string/add_member"/>
     </application>
 
 </manifest>

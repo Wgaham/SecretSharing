@@ -1,5 +1,7 @@
 package com.wgaham.secretsharing;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  *         Created by Wgaham on 2018/3/15.
  */
 
-public class Secret {
+public class Secret extends DataSupport{
     private int id;
 
     private String name;
@@ -19,9 +21,30 @@ public class Secret {
 
     private int allParson;
 
+    private String timeOfStart;
+
+    private String timeOfEnd;
+
     private int secret;
 
     private List<Member> memberList = new ArrayList<>();
+
+    public String getTimeOfStart() {
+        return timeOfStart;
+    }
+
+    public void setTimeOfStart(String timeOfStart) {
+        this.timeOfStart = timeOfStart;
+    }
+
+    public String getTimeOfEnd() {
+        return timeOfEnd;
+    }
+
+    public void setTimeOfEnd(String timeOfEnd) {
+        this.timeOfEnd = timeOfEnd;
+    }
+
 
     public List<Member> getMemberList() {
         return memberList;

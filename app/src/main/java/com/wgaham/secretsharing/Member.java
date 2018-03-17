@@ -1,5 +1,7 @@
 package com.wgaham.secretsharing;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * 秘密参与者的ORM映射类
  *
@@ -8,10 +10,8 @@ package com.wgaham.secretsharing;
  *         Created by Wgaham on 2018/3/15.
  */
 
-public class Member {
+public class Member extends DataSupport {
     private int id;
-
-    private int secretId;
 
     private int level;
 
@@ -37,14 +37,6 @@ public class Member {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getSecretId() {
-        return secretId;
-    }
-
-    public void setSecretId(int secretId) {
-        this.secretId = secretId;
     }
 
     public int getLevel() {
