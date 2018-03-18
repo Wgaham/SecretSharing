@@ -19,17 +19,11 @@ public class Member extends DataSupport {
 
     private int parson;
 
+    private int share;
+
     private String name;
 
-    private Secret secret;
-
-    public Secret getSecret() {
-        return secret;
-    }
-
-    public void setSecret(Secret secret) {
-        this.secret = secret;
-    }
+    private Secret secrets;
 
     public int getId() {
         return id;
@@ -47,14 +41,6 @@ public class Member extends DataSupport {
         this.level = level;
     }
 
-    public int getThreshold() {
-        return threshold;
-    }
-
-    public void setThreshold(int threshold) {
-        this.threshold = threshold;
-    }
-
     public int getParson() {
         return parson;
     }
@@ -69,5 +55,29 @@ public class Member extends DataSupport {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Secret getSecrets() {
+        return secrets;
+    }
+
+    public void setSecrets(Secret secrets) {
+        this.secrets = secrets;
+    }
+
+    public int getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
+    }
+
+    public int getShare() {
+        return share;
+    }
+
+    public void setShare(int share) {
+        this.share = share;
     }
 }

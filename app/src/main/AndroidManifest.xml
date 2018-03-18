@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +24,7 @@
             android:label="@string/add_title" />
         <activity
             android:name=".MemberAddActivity"
-            android:label="@string/add_member"/>
+            android:label="@string/add_member" />
     </application>
 
 </manifest>

@@ -1,12 +1,20 @@
 package com.wgaham.secretsharing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberAddActivity extends AppCompatActivity implements View.OnClickListener {
     private int secretValue;
@@ -31,8 +39,9 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        Button complete = (Button) findViewById(R.id.complete_button);
+        complete.setOnClickListener(this);
         SecretTemp secretTemp = (SecretTemp) getIntent().getSerializableExtra("secret");
-        secretValue = secretTemp.getSecretValue();
         secretName = secretTemp.getSecretName();
         startTime = secretTemp.getStartTime();
         endTime = secretTemp.getEndTime();
@@ -40,7 +49,54 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.complete_button:
+                String l01Name, l11Name, l12Name, l21Name, l22Name, l23Name;
+                l01Name = l01.getText().toString().trim();
+                l11Name = l11.getText().toString().trim();
+                l12Name = l12.getText().toString().trim();
+                l21Name = l21.getText().toString().trim();
+                l22Name = l22.getText().toString().trim();
+                l23Name = l23.getText().toString().trim();
+                if ("".equals(l01Name) || "".equals(l11Name) || "".equals(l12Name) || "".equals(l21Name) || "".equals(l22Name) || "".equals(l23Name)) {
+                    Toast.makeText(MemberAddActivity.this, "请将各项填写完整", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                Member member01 = new Member();
+                Member member11 = new Member();
+                Member member12 = new Member();
+                Member member21 = new Member();
+                Member member22 = new Member();
+                Member member23 = new Member();
+                saveMember(member01, 0, 1, l01Name);
+                saveMember(member11, 1, 2, l11Name);
+                saveMember(member12, 1, 2, l12Name);
+                saveMember(member21, 2, 3, l21Name);
+                saveMember(member22, 2, 3, l22Name);
+                saveMember(member23, 2, 3, l23Name);
+                List<Member> memberList = new ArrayList<>();
+                memberList.add(member01);
+                memberList.add(member11);
+                memberList.add(member12);
+                memberList.add(member21);
+                memberList.add(member22);
+                memberList.add(member23);
+                DataSupport.saveAll(memberList);
+                Secret secret = new Secret();
+                secret.setName(secretName);
+                secret.setTimeOfStart(startTime);
+                secret.setTimeOfEnd(endTime);
+                secret.setAllLevel(3);
+                secret.setAllParson(6);
+                secret.setMemberList(memberList);
+                secret.save();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
 
+        }
     }
 
     @Override
@@ -53,5 +109,11 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveMember(Member member, int level, int parson, String name) {
+        member.setLevel(level);
+        member.setParson(parson);
+        member.setName(name);
     }
 }
