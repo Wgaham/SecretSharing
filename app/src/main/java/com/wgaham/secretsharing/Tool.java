@@ -10,21 +10,32 @@ import java.util.Calendar;
  */
 
 public class Tool {
+    public static final int MINUTE = 60;
 
     public static boolean rebirthTimeJudgment(String startTime, String endTime) {
-        /**
-         * 夹击妹抖略略略
-         */
-        int startHour, endHour, startMinute, endMinute, hour, minute;
+        // 检测目前的时间是否符合重构时间
+
+        int startMinutes, endMinutes, nowMinutes, startHour, endHour, startMinute, endMinute, nowHour, nowMinute;
         if (startTime.equals(endTime)) {
             return true;
         }
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.AM_PM) == 0) {
-            hour = calendar.get(Calendar.HOUR);
+            nowHour = calendar.get(Calendar.HOUR);
         } else {
-            hour = calendar.get(Calendar.HOUR) + 12;
+            nowHour = calendar.get(Calendar.HOUR) + 12;
         }
-        minute = calendar.get(Calendar.MINUTE);
+
+        nowMinute = calendar.get(Calendar.MINUTE);
+        nowMinutes = nowHour * MINUTE + nowMinute;
+        String start[] = startTime.split(":");
+        startHour = Integer.getInteger(start[0]);
+        startMinute = Integer.getInteger(start[1]);
+        String end[] = endTime.split(":");
+        endHour = Integer.getInteger(end[0]);
+        endMinute = Integer.getInteger(end[1]);
+        startMinutes = startHour * MINUTE + startMinute;
+        endMinutes = endHour * MINUTE + endMinute;
+        return startMinutes <= nowMinutes && nowMinutes < endMinutes;
     }
 }
