@@ -25,6 +25,7 @@
         <activity
             android:name=".MemberAddActivity"
             android:label="@string/add_member" />
+        <activity android:name=".SecretShowActivity"></activity>
     </application>
 
 </manifest>

@@ -6,8 +6,8 @@ import org.litepal.crud.DataSupport;
  * 秘密参与者的ORM映射类
  *
  * @author Wgaham
- *         <p>
- *         Created by Wgaham on 2018/3/15.
+ *
+ *Created by Wgaham on 2018/3/15.
  */
 
 public class Member extends DataSupport {

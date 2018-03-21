@@ -68,12 +68,12 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
                 Member member21 = new Member();
                 Member member22 = new Member();
                 Member member23 = new Member();
-                saveMember(member01, 0, 1, l01Name);
-                saveMember(member11, 1, 2, l11Name);
-                saveMember(member12, 1, 2, l12Name);
-                saveMember(member21, 2, 3, l21Name);
-                saveMember(member22, 2, 3, l22Name);
-                saveMember(member23, 2, 3, l23Name);
+                saveMember(member01, 0, 1, 1, 0, l01Name);
+                saveMember(member11, 1, 2, 1, 0, l11Name);
+                saveMember(member12, 1, 2, 2, 0, l12Name);
+                saveMember(member21, 2, 3, 1, 0, l21Name);
+                saveMember(member22, 2, 3, 2, 0, l22Name);
+                saveMember(member23, 2, 3, 3, 0, l23Name);
                 List<Member> memberList = new ArrayList<>();
                 memberList.add(member01);
                 memberList.add(member11);
@@ -111,9 +111,11 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveMember(Member member, int level, int parson, String name) {
+    private void saveMember(Member member, int level, int threshold, int parson, int share, String name) {
         member.setLevel(level);
+        member.setThreshold(threshold);
         member.setParson(parson);
+        member.setShare(share);
         member.setName(name);
     }
 }

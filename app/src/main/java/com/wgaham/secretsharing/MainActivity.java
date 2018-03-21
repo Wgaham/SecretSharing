@@ -18,6 +18,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
+    SecretlistAdapter secretlistAdapter;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.add_floatactionbutton);
         setSupportActionBar(toolbar);
         addButton.setOnClickListener(this);
-        setData();
+        recyclerView = (RecyclerView) findViewById(R.id.secret_list_recyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        List<Secretlist> secretlists = setData();
+        secretlistAdapter = new SecretlistAdapter(secretlists);
+        recyclerView.setAdapter(secretlistAdapter);
+        List<Integer> list = new ArrayList<>();
     }
 
     @Override
@@ -56,21 +64,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        setData();
+        List<Secretlist> secretlists = setData();
+        secretlistAdapter = new SecretlistAdapter(secretlists);
+        recyclerView.setAdapter(secretlistAdapter);
 
     }
 
-    private void setData() {
+    private List<Secretlist> setData() {
         List<Secret> secrets = DataSupport.findAll(Secret.class);
         List<Secretlist> secretlists = new ArrayList<>();
         for (int i = 0; i < secrets.size(); i++) {
-            Secretlist secretlist = new Secretlist(secrets.get(i).getName());
+            Secretlist secretlist = new Secretlist(secrets.get(i).getId(), secrets.get(i).getName());
             secretlists.add(secretlist);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.secret_list_recyclerview);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
-            SecretlistAdapter secretlistAdapter = new SecretlistAdapter(secretlists);
-            recyclerView.setAdapter(secretlistAdapter);
         }
+        return secretlists;
     }
 }

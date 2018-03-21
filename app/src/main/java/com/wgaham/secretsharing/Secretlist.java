@@ -8,12 +8,18 @@ package com.wgaham.secretsharing;
  */
 
 public class Secretlist {
+
+    private int id;
+
     private String name;
 
-
-    public Secretlist(String name) {
+    public Secretlist(int id, String name) {
+        this.id = id;
         this.name = name;
+    }
 
+    public int getId() {
+        return id;
     }
 
     public String getName() {
