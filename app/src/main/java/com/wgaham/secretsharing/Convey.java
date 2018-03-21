@@ -18,7 +18,7 @@ public class Convey {
         //以字符数组的形式接收多项式的系数和指数，
         if (arrStrings.length % 2 == 0) {
             for (int i = 0; i < arrStrings.length; i = i + 2) {
-                if (arrStrings[i + 1] != "0") {
+                if ("0".equals(arrStrings[i + 1])) {
                     int a = Integer.parseInt(arrStrings[i]);
                     int b = Integer.parseInt(arrStrings[i + 1]);
                     Polynomial p0 = new Polynomial(a, b);
@@ -103,9 +103,7 @@ public class Convey {
 
 
             for (int i = 0; i < L; i++) {
-                for (int j = 0; j < L; j++) {
-                    A[i][j] = as[i][j];
-                }
+                System.arraycopy(as[i], 0, A[i], 0, L);
             }
 
             //替换列，以等级作为切入点
@@ -114,9 +112,7 @@ public class Convey {
             B[0][0] = A[0][0];
             //复制数组A给数组B，用来替换数组B中某一列的值
             for (int k = 0; k < A.length; k++) {
-                for (int j = 0; j < A.length; j++) {
-                    B[k][j] = A[k][j];
-                }
+                System.arraycopy(A[k], 0, B[k], 0, A.length);
             }
 
             for (int j = 0; j < A.length; j++) {

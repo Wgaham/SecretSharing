@@ -1,6 +1,11 @@
 package com.wgaham.secretsharing;
 
-public class Matrix {
+/**
+ * 矩阵的支持类
+ *
+ * @author Simba
+ */
+class Matrix {
     // 矩阵的计算
     double determinant(double[][] yuzs2) {
         double result2 = 0;
