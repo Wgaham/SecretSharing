@@ -69,7 +69,6 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 return true;
             default:
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -129,7 +128,7 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                     dialogBuild.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialogBuild.create();
+                            dialog.dismiss();
                         }
                     });
                     dialogBuild.show();

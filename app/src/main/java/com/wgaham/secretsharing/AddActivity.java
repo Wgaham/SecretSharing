@@ -157,7 +157,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
                 return true;
             default:
-                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -26,8 +26,15 @@
             android:name=".MemberAddActivity"
             android:label="@string/add_member" />
         <activity android:name=".SecretShowActivity" />
-        <activity android:name=".MemberSelectActivity"
-            android:label="@string/member_select"/>
+        <activity
+            android:name=".MemberSelectActivity"
+            android:label="@string/member_select" />
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about" />
+        <activity
+            android:name=".OpenSourceActivity"
+            android:label="@string/open_source" />
     </application>
 
 </manifest>

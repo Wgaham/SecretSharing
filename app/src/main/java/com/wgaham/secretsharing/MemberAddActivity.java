@@ -116,7 +116,6 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
                 finish();
                 return true;
             default:
-                break;
         }
         return super.onOptionsItemSelected(item);
     }

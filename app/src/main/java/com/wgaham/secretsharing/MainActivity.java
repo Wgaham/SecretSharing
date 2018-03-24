@@ -1,8 +1,10 @@
 package com.wgaham.secretsharing;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,12 +60,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.delete:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.setTitle("删除秘密");
+                dialog.setMessage("将会清除所有的秘密数据");
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DataSupport.deleteAll(Secret.class);
+                        dialog.dismiss();
+                        List<Secretlist> secretlists = setData();
+                        secretlistAdapter = new SecretlistAdapter(secretlists);
+                        recyclerView.setAdapter(secretlistAdapter);
+                    }
+                });
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                break;
+            case R.id.about:
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                break;
+            default:
+        }
+        return true;
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         List<Secretlist> secretlists = setData();
         secretlistAdapter = new SecretlistAdapter(secretlists);
         recyclerView.setAdapter(secretlistAdapter);
