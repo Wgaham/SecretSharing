@@ -47,7 +47,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         findViewById(R.id.start_time_set).setOnClickListener(this);
         findViewById(R.id.end_time_set).setOnClickListener(this);
         Calendar calendar = Calendar.getInstance();
-        startHour = endHour = calendar.get(Calendar.HOUR);
+        if (calendar.get(Calendar.AM_PM) == 0) {
+            startHour = endHour = calendar.get(Calendar.HOUR);
+        } else {
+            startHour = endHour = calendar.get(Calendar.HOUR) + 12;
+        }
         startMinute = endMinute = calendar.get(Calendar.MINUTE);
         startTimeBuffer = new StringBuffer();
         endTimeBuffer = new StringBuffer();
@@ -138,7 +142,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 secretTemp.setStartTime(startTimeBuffer.toString());
                 secretTemp.setEndTime(endTimeBuffer.toString());
                 Intent intent = new Intent(this, MemberAddActivity.class);
-                intent.putExtra("secret",secretTemp);
+                intent.putExtra("secret", secretTemp);
                 startActivity(intent);
                 break;
             default:

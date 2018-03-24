@@ -10,4 +10,6 @@
     <string name="next_text">下一步</string>
     <string name="start_time">重构开始时间</string>
     <string name="end_time">重构结束时间</string>
+    <string name="restructure">重构</string>
+    <string name="member_select">请选择参加重构的人员</string>
 </resources>

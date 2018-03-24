@@ -9,10 +9,10 @@ import java.util.Calendar;
  *         Created by zh on 2018/3/13.
  */
 
-public class Tool {
-    public static final int MINUTE = 60;
+class Tool {
+    static final int MINUTE = 60;
 
-    public static boolean rebirthTimeJudgment(String startTime, String endTime) {
+    static boolean restructureTimeJudgment(String startTime, String endTime) {
         // 检测目前的时间是否符合重构时间
 
         int startMinutes, endMinutes, nowMinutes, startHour, endHour, startMinute, endMinute, nowHour, nowMinute;
@@ -28,14 +28,23 @@ public class Tool {
 
         nowMinute = calendar.get(Calendar.MINUTE);
         nowMinutes = nowHour * MINUTE + nowMinute;
-        String start[] = startTime.split(":");
-        startHour = Integer.getInteger(start[0]);
-        startMinute = Integer.getInteger(start[1]);
-        String end[] = endTime.split(":");
-        endHour = Integer.getInteger(end[0]);
-        endMinute = Integer.getInteger(end[1]);
-        startMinutes = startHour * MINUTE + startMinute;
-        endMinutes = endHour * MINUTE + endMinute;
-        return startMinutes <= nowMinutes && nowMinutes < endMinutes;
+        try {
+            String[] start = startTime.split(":");
+            startHour = Integer.parseInt(start[0]);
+            startMinute = Integer.parseInt(start[1]);
+            String[] end = endTime.split(":");
+            endHour = Integer.parseInt(end[0]);
+            endMinute = Integer.parseInt(end[1]);
+            startMinutes = startHour * MINUTE + startMinute;
+            endMinutes = endHour * MINUTE + endMinute;
+            if (startMinutes < endMinutes) {
+                return startMinutes <= nowMinutes && nowMinutes < endMinutes;
+            } else {
+                return startMinutes <= nowMinutes || nowMinutes < endMinutes;
+            }
+        } catch (ExceptionInInitializerError eiie) {
+            eiie.printStackTrace();
+            return false;
+        }
     }
 }

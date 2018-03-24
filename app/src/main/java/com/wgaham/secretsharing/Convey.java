@@ -11,6 +11,7 @@ package com.wgaham.secretsharing;
 public class Convey {
     //1.接受传递的秘密值m，等级数L,参与者n
     int[] Receivingserect(int m, int L, int n, String[] arrStrings, int[] t) throws Exception {
+        //秘密值m,等级数，人数n
         int arr[] = new int[n];//用于接收返回的子份额序列
 
         //构建多项式
@@ -18,7 +19,7 @@ public class Convey {
         //以字符数组的形式接收多项式的系数和指数，
         if (arrStrings.length % 2 == 0) {
             for (int i = 0; i < arrStrings.length; i = i + 2) {
-                if ("0".equals(arrStrings[i + 1])) {
+                if (!"0".equals(arrStrings[i + 1])) {
                     int a = Integer.parseInt(arrStrings[i]);
                     int b = Integer.parseInt(arrStrings[i + 1]);
                     Polynomial p0 = new Polynomial(a, b);

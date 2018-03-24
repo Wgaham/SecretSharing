@@ -45,6 +45,7 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
         secretName = secretTemp.getSecretName();
         startTime = secretTemp.getStartTime();
         endTime = secretTemp.getEndTime();
+        secretValue = secretTemp.getSecretValue();
     }
 
     @Override
@@ -62,34 +63,43 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
                     Toast.makeText(MemberAddActivity.this, "请将各项填写完整", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                Member member01 = new Member();
-                Member member11 = new Member();
-                Member member12 = new Member();
-                Member member21 = new Member();
-                Member member22 = new Member();
-                Member member23 = new Member();
-                saveMember(member01, 0, 1, 1, 0, l01Name);
-                saveMember(member11, 1, 2, 1, 0, l11Name);
-                saveMember(member12, 1, 2, 2, 0, l12Name);
-                saveMember(member21, 2, 3, 1, 0, l21Name);
-                saveMember(member22, 2, 3, 2, 0, l22Name);
-                saveMember(member23, 2, 3, 3, 0, l23Name);
-                List<Member> memberList = new ArrayList<>();
-                memberList.add(member01);
-                memberList.add(member11);
-                memberList.add(member12);
-                memberList.add(member21);
-                memberList.add(member22);
-                memberList.add(member23);
-                DataSupport.saveAll(memberList);
-                Secret secret = new Secret();
-                secret.setName(secretName);
-                secret.setTimeOfStart(startTime);
-                secret.setTimeOfEnd(endTime);
-                secret.setAllLevel(3);
-                secret.setAllParson(6);
-                secret.setMemberList(memberList);
-                secret.save();
+                String[] strings = {"3", "1", "5", "2"};
+                int[] ints = {1, 2, 3};
+                Convey convey = new Convey();
+                try {
+                    int[] share = convey.Receivingserect(secretValue, 3, 6, strings, ints);
+                    Member member01 = new Member();
+                    Member member11 = new Member();
+                    Member member12 = new Member();
+                    Member member21 = new Member();
+                    Member member22 = new Member();
+                    Member member23 = new Member();
+                    saveMember(member01, 0, 1, 1, share[0], l01Name);
+                    saveMember(member11, 1, 2, 1, share[1], l11Name);
+                    saveMember(member12, 1, 2, 2, share[2], l12Name);
+                    saveMember(member21, 2, 3, 1, share[3], l21Name);
+                    saveMember(member22, 2, 3, 2, share[4], l22Name);
+                    saveMember(member23, 2, 3, 3, share[5], l23Name);
+                    List<Member> memberList = new ArrayList<>();
+                    memberList.add(member01);
+                    memberList.add(member11);
+                    memberList.add(member12);
+                    memberList.add(member21);
+                    memberList.add(member22);
+                    memberList.add(member23);
+                    DataSupport.saveAll(memberList);
+                    Secret secret = new Secret();
+                    secret.setName(secretName);
+                    secret.setTimeOfStart(startTime);
+                    secret.setTimeOfEnd(endTime);
+                    secret.setSecret(secretValue);
+                    secret.setAllLevel(3);
+                    secret.setAllParson(6);
+                    secret.setMemberList(memberList);
+                    secret.save();
+                } catch (Exception e) {
+                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
