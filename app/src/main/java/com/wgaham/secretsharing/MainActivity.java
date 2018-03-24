@@ -62,12 +62,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         List<Secretlist> secretlists = setData();
         secretlistAdapter = new SecretlistAdapter(secretlists);
         recyclerView.setAdapter(secretlistAdapter);
-
     }
 
     private List<Secretlist> setData() {
