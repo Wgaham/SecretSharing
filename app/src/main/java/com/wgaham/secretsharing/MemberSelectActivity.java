@@ -79,35 +79,46 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
             case R.id.restructure_button:
                 List<Integer> selectedCoordinates = new ArrayList<>();
                 List<Integer> selectedShares = new ArrayList<>();
+                boolean isL1 = false, isL2 = false, isL3 = false;
                 if (l01.isChecked()) {
-                    selectedCoordinates.add(0);
                     selectedCoordinates.add(1);
+                    selectedCoordinates.add(0);
                     selectedShares.add(Shares.get(0));
+                    isL1 = true;
                 }
                 if (l11.isChecked()) {
                     selectedCoordinates.add(1);
                     selectedCoordinates.add(1);
                     selectedShares.add(Shares.get(1));
+                    isL2 = true;
                 }
                 if (l12.isChecked()) {
-                    selectedCoordinates.add(1);
                     selectedCoordinates.add(2);
+                    selectedCoordinates.add(1);
                     selectedShares.add(Shares.get(2));
+                    isL2 = true;
                 }
                 if (l21.isChecked()) {
-                    selectedCoordinates.add(2);
                     selectedCoordinates.add(1);
+                    selectedCoordinates.add(2);
                     selectedShares.add(Shares.get(3));
+                    isL3 = true;
                 }
                 if (l22.isChecked()) {
                     selectedCoordinates.add(2);
                     selectedCoordinates.add(2);
                     selectedShares.add(Shares.get(4));
+                    isL3 = true;
                 }
                 if (l23.isChecked()) {
-                    selectedCoordinates.add(2);
                     selectedCoordinates.add(3);
+                    selectedCoordinates.add(2);
                     selectedShares.add(Shares.get(5));
+                    isL3 = true;
+                }
+                if (!(isL1 && isL2 && isL3)) {
+                    Toast.makeText(MemberSelectActivity.this, "请确保每个等级都有人参与", Toast.LENGTH_SHORT).show();
+                    break;
                 }
                 int[] selectedCoordinatesArr = new int[selectedCoordinates.size()];
                 for (int i = 0; i < selectedCoordinates.size(); i++) {
@@ -133,7 +144,7 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                     });
                     dialogBuild.show();
                 } catch (Exception e) {
-                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "重构失败", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

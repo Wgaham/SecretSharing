@@ -15,6 +15,7 @@ import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MemberAddActivity extends AppCompatActivity implements View.OnClickListener {
     private int secretValue;
@@ -63,7 +64,7 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
                     Toast.makeText(MemberAddActivity.this, "请将各项填写完整", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                String[] strings = {"3", "1", "5", "2"};
+                String[] strings = {randomInt(), "1", randomInt(), "2"};
                 int[] ints = {1, 2, 3};
                 Convey convey = new Convey();
                 try {
@@ -126,5 +127,10 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
         member.setParson(parson);
         member.setShare(share);
         member.setName(name);
+    }
+
+    private String randomInt() {
+        Random random = new Random();
+        return Integer.toString(random.nextInt(10) + 1);
     }
 }

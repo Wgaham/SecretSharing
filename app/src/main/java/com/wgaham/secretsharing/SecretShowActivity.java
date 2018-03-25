@@ -49,6 +49,17 @@ public class SecretShowActivity extends AppCompatActivity implements View.OnClic
         }
         Secret secret = DataSupport.find(Secret.class, id, true);
         List<Member> memberList = secret.getMemberList();
+        StringBuffer secretBuffer = new StringBuffer();
+        secretBuffer.append("此秘密共有").append(secret.getAllParson()).append("个参与者，分为").append(secret.getAllLevel()).append("个等级\n");
+        for (int i = 0; i < memberList.size(); i++) {
+            secretBuffer.append("参与者“").append(memberList.get(i).getName()).append("”是等级").append(memberList.get(i).getLevel()).append("的第")
+                    .append(memberList.get(i).getParson()).append("个人，他所占有的子份额数是：").append(memberList.get(i).getShare()).append("\n");
+        }
+        String secretMember = secretBuffer.toString();
+        secretBuffer.setLength(0);
+        if (!"".equals(secretMember)) {
+            secretDetail.setText(secretMember);
+        }
         startTime = secret.getTimeOfStart();
         endTime = secret.getTimeOfEnd();
         actionButton.setOnClickListener(this);
