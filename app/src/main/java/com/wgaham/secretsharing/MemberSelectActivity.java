@@ -22,7 +22,7 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
     private int id;
     private int secretValueFound;
     private CheckBox l01, l11, l12, l21, l22, l23;
-    private List<Integer> Shares = new ArrayList<>();
+    private List<Integer> shares = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
             String name = memberList.get(i).getName();
             int share = memberList.get(i).getShare();
             memberNames.add(name);
-            Shares.add(share);
+            shares.add(share);
         }
         l01 = (CheckBox) findViewById(R.id.checkBox_l01);
         l11 = (CheckBox) findViewById(R.id.checkBox_l11);
@@ -83,37 +83,37 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                 if (l01.isChecked()) {
                     selectedCoordinates.add(1);
                     selectedCoordinates.add(0);
-                    selectedShares.add(Shares.get(0));
+                    selectedShares.add(shares.get(0));
                     isL1 = true;
                 }
                 if (l11.isChecked()) {
                     selectedCoordinates.add(1);
                     selectedCoordinates.add(1);
-                    selectedShares.add(Shares.get(1));
+                    selectedShares.add(shares.get(1));
                     isL2 = true;
                 }
                 if (l12.isChecked()) {
                     selectedCoordinates.add(2);
                     selectedCoordinates.add(1);
-                    selectedShares.add(Shares.get(2));
+                    selectedShares.add(shares.get(2));
                     isL2 = true;
                 }
                 if (l21.isChecked()) {
                     selectedCoordinates.add(1);
                     selectedCoordinates.add(2);
-                    selectedShares.add(Shares.get(3));
+                    selectedShares.add(shares.get(3));
                     isL3 = true;
                 }
                 if (l22.isChecked()) {
                     selectedCoordinates.add(2);
                     selectedCoordinates.add(2);
-                    selectedShares.add(Shares.get(4));
+                    selectedShares.add(shares.get(4));
                     isL3 = true;
                 }
                 if (l23.isChecked()) {
                     selectedCoordinates.add(3);
                     selectedCoordinates.add(2);
-                    selectedShares.add(Shares.get(5));
+                    selectedShares.add(shares.get(5));
                     isL3 = true;
                 }
                 if (!(isL1 && isL2 && isL3)) {

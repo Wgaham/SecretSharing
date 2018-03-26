@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         List<Secretlist> secretlists = setData();
         secretlistAdapter = new SecretlistAdapter(secretlists);
         recyclerView.setAdapter(secretlistAdapter);
-        List<Integer> list = new ArrayList<>();
     }
 
     @Override

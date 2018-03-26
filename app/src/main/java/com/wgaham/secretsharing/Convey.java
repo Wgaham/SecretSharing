@@ -12,7 +12,7 @@ public class Convey {
     //1.接受传递的秘密值m，等级数L,参与者n
     int[] Receivingserect(int m, int L, int n, String[] arrStrings, int[] t) throws Exception {
         //秘密值m,等级数，人数n
-        int arr[] = new int[n];//用于接收返回的子份额序列
+        int[] arr = new int[n];//用于接收返回的子份额序列
 
         //构建多项式
         Polynomial p = new Polynomial(m, 0);
@@ -99,7 +99,7 @@ public class Convey {
             double v = matrix.determinant(as);
 
             //依次替换X中的列，生成新的行列式，计算系数,先复制到一个数组A中，再进行替换
-            double A[][] = new double[L][L];//长度怎么解决？长度应该是as[][]数组的长度，因为要复制数组到A中
+            double[][] A = new double[L][L];//长度怎么解决？长度应该是as[][]数组的长度，因为要复制数组到A中
             //  double y[]=new double[3];//存放行列式的值
 
 

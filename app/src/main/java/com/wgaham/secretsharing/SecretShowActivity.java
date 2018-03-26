@@ -17,6 +17,7 @@ import org.litepal.crud.DataSupport;
 import java.util.List;
 
 
+
 public class SecretShowActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String SECRET_ID = "secret_id";
@@ -80,7 +81,6 @@ public class SecretShowActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.restructure_fab:
-                Tool.restructureTimeJudgment(startTime, endTime);
                 if (!Tool.restructureTimeJudgment(startTime, endTime)) {
                     Toast.makeText(SecretShowActivity.this, "现在时间不在重构允许时间之内", Toast.LENGTH_SHORT).show();
                     break;

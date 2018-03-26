@@ -1,7 +1,9 @@
 package com.wgaham.secretsharing;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -26,6 +28,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private EditText secretNameEditText, secretEditText;
     private int startHour, startMinute, endHour, endMinute;
     private StringBuffer startTimeBuffer = null, endTimeBuffer = null;
+    public static final int FILE_REQUESTCODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         memberButton.setOnClickListener(this);
         findViewById(R.id.start_time_set).setOnClickListener(this);
         findViewById(R.id.end_time_set).setOnClickListener(this);
+        findViewById(R.id.file_select).setOnClickListener(this);
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.AM_PM) == 0) {
             startHour = endHour = calendar.get(Calendar.HOUR);
@@ -145,6 +149,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 intent.putExtra("secret", secretTemp);
                 startActivity(intent);
                 break;
+            case R.id.file_select:
+                Intent fileExploer = new Intent(Intent.ACTION_GET_CONTENT);
+                fileExploer.setType("*/*");
+                fileExploer.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(fileExploer, FILE_REQUESTCODE);
             default:
                 break;
         }
@@ -174,6 +183,16 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == FILE_REQUESTCODE) {
+                Uri uri = data.getData();
+                Toast.makeText(AddActivity.this, uri.toString(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
     <string name="add_member">添加参与者</string>
     <string name="delete">删除</string>
     <string name="about">关于</string>
+    <string name="file_select">选择文件</string>
     <string name="secretname_hint">请输入这条秘密的名称</string>
     <string name="secret_hint">请输入秘密值</string>
     <string name="next_text">下一步</string>
