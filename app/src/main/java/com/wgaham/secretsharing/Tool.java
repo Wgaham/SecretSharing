@@ -10,6 +10,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 import java.util.Calendar;
+import java.util.Random;
 
 /**
  * 一些工具函数
@@ -155,6 +156,20 @@ public final class Tool {
             return uri.getPath();
         }
         return null;
+    }
+
+    /**
+     * 生成随机长度随机内容的字符串
+     */
+    static String randomIndexString() {
+        Random random = new Random();
+        int l = random.nextInt(10) + 1;
+        StringBuilder stringBuilder = new StringBuilder();
+        String[] lowerCaseLetters = new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        for (int i = 0; i < l; i++) {
+            stringBuilder.append(lowerCaseLetters[random.nextInt(26)]);
+        }
+        return stringBuilder.toString();
     }
 
     /**

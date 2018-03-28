@@ -10,9 +10,8 @@ import java.io.Serializable;
  */
 
 public class SecretTemp implements Serializable {
-    private String secretName, startTime, endTime;
+    private String secretName, startTime, endTime, filePath;
 
-    private int secretValue;
 
     public String getSecretName() {
         return secretName;
@@ -38,11 +37,11 @@ public class SecretTemp implements Serializable {
         this.endTime = endTime;
     }
 
-    public int getSecretValue() {
-        return secretValue;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setSecretValue(int secretValue) {
-        this.secretValue = secretValue;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

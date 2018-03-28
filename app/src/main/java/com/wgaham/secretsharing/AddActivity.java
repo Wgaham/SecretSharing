@@ -1,16 +1,20 @@
 package com.wgaham.secretsharing;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +28,11 @@ import java.util.Calendar;
 public class AddActivity extends AppCompatActivity implements View.OnClickListener, TimePicker.OnTimeChangedListener {
     public String view;
     private int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-    private TextView startTimeView, endTimeView;
-    private EditText secretNameEditText, secretEditText;
-    private int startHour, startMinute, endHour, endMinute;
+    private TextView startTimeView, endTimeView, fileNameView;
+    private EditText secretNameEditText;
+    private int startHour, startMinute, endHour, endMinute, secretValue;
     private StringBuffer startTimeBuffer = null, endTimeBuffer = null;
+    private String filePath;
     public static final int FILE_REQUESTCODE = 1;
 
     @Override
@@ -37,11 +42,11 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         Toolbar toolbar = (Toolbar) findViewById(R.id.add_toolbar);
         setSupportActionBar(toolbar);
         secretNameEditText = (EditText) findViewById(R.id.secret_name_editText);
-        secretEditText = (EditText) findViewById(R.id.secret_value);
-        secretEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
         startTimeView = (TextView) findViewById(R.id.start_time);
         endTimeView = (TextView) findViewById(R.id.end_time);
+        fileNameView = (TextView) findViewById(R.id.file_view);
         Button memberButton = (Button) findViewById(R.id.member);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -134,26 +139,30 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.member:
                 String secretName = secretNameEditText.getText().toString().trim();
-                String secretStr = (secretEditText.getText().toString());
-                if ("".equals(secretName) || "".equals(secretStr) || startTimeBuffer.length() == 0 || endTimeBuffer.length() == 0) {
+                String fileName = fileNameView.getText().toString().trim();
+                if ("".equals(secretName) || "".equals(fileName) || startTimeBuffer.length() == 0 || endTimeBuffer.length() == 0) {
                     Toast.makeText(AddActivity.this, "请将数据填写完整", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                int secretInt = Integer.parseInt(secretStr);
                 SecretTemp secretTemp = new SecretTemp();
                 secretTemp.setSecretName(secretName);
-                secretTemp.setSecretValue(secretInt);
                 secretTemp.setStartTime(startTimeBuffer.toString());
                 secretTemp.setEndTime(endTimeBuffer.toString());
+                secretTemp.setFilePath(filePath);
                 Intent intent = new Intent(this, MemberAddActivity.class);
                 intent.putExtra("secret", secretTemp);
                 startActivity(intent);
                 break;
             case R.id.file_select:
-                Intent fileExploer = new Intent(Intent.ACTION_GET_CONTENT);
-                fileExploer.setType("*/*");
-                fileExploer.addCategory(Intent.CATEGORY_OPENABLE);
-                startActivityForResult(fileExploer, FILE_REQUESTCODE);
+                if (ContextCompat.checkSelfPermission(AddActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(AddActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, FILE_REQUESTCODE);
+                } else {
+                    Intent fileExploer = new Intent(Intent.ACTION_GET_CONTENT);
+                    fileExploer.setType("*/*");
+                    fileExploer.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(fileExploer, FILE_REQUESTCODE);
+                }
+                break;
             default:
                 break;
         }
@@ -191,8 +200,25 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == FILE_REQUESTCODE) {
                 Uri uri = data.getData();
-                Toast.makeText(AddActivity.this, uri.toString(), Toast.LENGTH_SHORT).show();
+                filePath = Tool.getPathAfterKitKat(AddActivity.this, uri);
+                fileNameView.setText(filePath.substring(filePath.lastIndexOf("/") + 1));
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FILE_REQUESTCODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent fileExploer = new Intent(Intent.ACTION_GET_CONTENT);
+                    fileExploer.setType("*/*");
+                    fileExploer.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(fileExploer, FILE_REQUESTCODE);
+                } else {
+                    Toast.makeText(this, "拒绝权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 }

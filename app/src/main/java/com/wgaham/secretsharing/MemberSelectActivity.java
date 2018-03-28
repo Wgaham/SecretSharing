@@ -1,8 +1,15 @@
 package com.wgaham.secretsharing;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
@@ -19,10 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberSelectActivity extends AppCompatActivity implements View.OnClickListener {
-    private int id;
-    private int secretValueFound;
+    private int id, secretValueFound;
+    private String filePath;
     private CheckBox l01, l11, l12, l21, l22, l23;
+    private TextView fileView;
     private List<Integer> shares = new ArrayList<>();
+
+    public static final int FILE_REQUESTCODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +42,8 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
         Toolbar toolbar = (Toolbar) findViewById(R.id.member_select_toorbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        findViewById(R.id.file_select_dec).setOnClickListener(this);
+        fileView = (TextView) findViewById(R.id.file_view_dec);
         Button restructureButton = (Button) findViewById(R.id.restructure_button);
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -76,6 +89,16 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.file_select_dec:
+                if (ContextCompat.checkSelfPermission(MemberSelectActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MemberSelectActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, FILE_REQUESTCODE);
+                } else {
+                    Intent fileExploer = new Intent(Intent.ACTION_GET_CONTENT);
+                    fileExploer.setType("*/*");
+                    fileExploer.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(fileExploer, FILE_REQUESTCODE);
+                }
+                break;
             case R.id.restructure_button:
                 List<Integer> selectedCoordinates = new ArrayList<>();
                 List<Integer> selectedShares = new ArrayList<>();
@@ -128,13 +151,22 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                 for (int i = 0; i < selectedShares.size(); i++) {
                     selectedSharesArr[i] = selectedShares.get(i);
                 }
+                if (FileEncryptAndDecrypt.SALT_SUFFIX.equals(filePath.substring(filePath.lastIndexOf(".") - 1))) {
+                    Toast.makeText(MemberSelectActivity.this, "请选择被本系统加密后的文件", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                String fileNameBefore = filePath.substring(0, filePath.lastIndexOf("."));
 
                 Convey convey = new Convey();
                 try {
+                    FileEncryptAndDecrypt fileEncryptAndDecrypt = new FileEncryptAndDecrypt();
                     double secretValue = convey.Receivingsequence(selectedCoordinatesArr, selectedSharesArr, 3);
+                    int selectValueInt = (int) secretValue;
+                    fileEncryptAndDecrypt.readFileLastByte(filePath, selectValueInt);
+                    fileEncryptAndDecrypt.decrypt(filePath, fileNameBefore, selectValueInt);
                     final AlertDialog.Builder dialogBuild = new AlertDialog.Builder(MemberSelectActivity.this);
                     dialogBuild.setTitle("重构完成");
-                    dialogBuild.setMessage("重构得到的秘密值为：" + secretValue + "\n记录的原始秘密值为：" + secretValueFound);
+                    dialogBuild.setMessage("重构得到的秘密值为：" + selectValueInt + "\n记录的原始秘密值为：" + secretValueFound + "\n请到原始目录寻找解密后的文件");
                     dialogBuild.setCancelable(false);
                     dialogBuild.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
@@ -148,6 +180,35 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                 }
                 break;
             default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case FILE_REQUESTCODE:
+                    Uri uri = data.getData();
+                    filePath = Tool.getPathAfterKitKat(MemberSelectActivity.this, uri);
+                    fileView.setText(filePath.substring(filePath.lastIndexOf("/") + 1));
+
+
+            }
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FILE_REQUESTCODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent fileExploer = new Intent(Intent.ACTION_GET_CONTENT);
+                    fileExploer.setType("*/*");
+                    fileExploer.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(fileExploer, FILE_REQUESTCODE);
+                } else {
+                    Toast.makeText(this, "拒绝权限", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
