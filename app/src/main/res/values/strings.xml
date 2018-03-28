@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">多级秘密共享</string>
     <string name="secretlist">秘密列表</string>
-    <string name="add_title">新建秘密</string>
+    <string name="add_title">新建任务</string>
     <string name="add_member">添加参与者</string>
     <string name="delete">删除</string>
     <string name="about">关于</string>

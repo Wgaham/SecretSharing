@@ -127,7 +127,9 @@ public class FileEncryptAndDecrypt {
      */
     public String readFileLastByte(String fileName, int keyLength) {
         File file = new File(fileName);
-        if (!file.exists()) return null;
+        if (!file.exists()) {
+            return null;
+        }
         StringBuffer str = new StringBuffer();
         try {
             // 打开一个随机访问文件流，按读写方式
