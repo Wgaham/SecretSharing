@@ -151,6 +151,10 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                 for (int i = 0; i < selectedShares.size(); i++) {
                     selectedSharesArr[i] = selectedShares.get(i);
                 }
+                if ("".equals(fileView.getText().toString())) {
+                    Toast.makeText(MemberSelectActivity.this, "请选择要解密的文件", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if (FileEncryptAndDecrypt.SALT_SUFFIX.equals(filePath.substring(filePath.lastIndexOf(".") - 1))) {
                     Toast.makeText(MemberSelectActivity.this, "请选择被本系统加密后的文件", Toast.LENGTH_SHORT).show();
                     break;

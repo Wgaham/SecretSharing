@@ -61,7 +61,7 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
                 l22Name = l22.getText().toString().trim();
                 l23Name = l23.getText().toString().trim();
                 if ("".equals(l01Name) || "".equals(l11Name) || "".equals(l12Name) || "".equals(l21Name) || "".equals(l22Name) || "".equals(l23Name)) {
-                    Toast.makeText(MemberAddActivity.this, "请将各项填写完整", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MemberAddActivity.this, "请完成所有内容", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 String[] strings = {randomInt(), "1", randomInt(), "2"};
