@@ -46,7 +46,7 @@ public class OpenSourceActivity extends AppCompatActivity {
                         "distributed under the License is distributed on an \"AS IS\" BASIS,\n" +
                         "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n" +
                         "See the License for the specific language governing permissions and\n" +
-                        "limitat\n\n"+
+                        "limitations under the License.\n\n"+
         "---------------------\n图标来源于”阿里云UED，其所有权归iconfont.Inc以及阿里云UED所有");
     }
 
