@@ -29,6 +29,7 @@ public class Secret extends DataSupport{
 
     private List<Member> memberList = new ArrayList<>();
 
+
     public String getTimeOfStart() {
         return timeOfStart;
     }

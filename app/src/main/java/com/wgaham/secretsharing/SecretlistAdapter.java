@@ -14,7 +14,7 @@ import java.util.List;
  * 主页面列表的适配器
  *
  * @author Wgaham
- *         Created by Wgaham on 2018/3/13.
+ * Created by Wgaham on 2018/3/13.
  */
 
 public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.ViewHolder> {
@@ -22,6 +22,10 @@ public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.Vi
     private Context mContext;
 
     private List<Secretlist> mSecretlists;
+
+    public static final int VIEW_ITEM = 1;
+    public static final int VIEW_EMPTY = 0;
+    boolean empty=false;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView secretName;
@@ -43,6 +47,10 @@ public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.Vi
         if (mContext == null) {
             mContext = parent.getContext();
         }
+        if (viewType == VIEW_EMPTY) {
+            View viewEmpty = LayoutInflater.from(mContext).inflate(R.layout.empty_item, parent, false);
+            return new ViewHolder(viewEmpty);
+        }
         View view = LayoutInflater.from(mContext).inflate(R.layout.secret_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.secretView.setOnClickListener(new View.OnClickListener() {
@@ -62,13 +70,28 @@ public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Secretlist secretlist = mSecretlists.get(position);
-        holder.secretName.setText(secretlist.getName());
+        if(!empty) {
+            Secretlist secretlist = mSecretlists.get(position);
+            holder.secretName.setText(secretlist.getName());
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (mSecretlists.size() == 0) {
+            return 1;
+        }
         return mSecretlists.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mSecretlists.size() == 0) {
+            empty=true;
+            return VIEW_EMPTY;
+        }
+        empty=false;
+        return VIEW_ITEM;
     }
 
     private void secretClick(ViewHolder holder) {

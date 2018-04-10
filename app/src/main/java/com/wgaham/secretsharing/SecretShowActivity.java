@@ -9,14 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bin.david.form.core.SmartTable;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
-
-
 
 public class SecretShowActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,7 +35,6 @@ public class SecretShowActivity extends AppCompatActivity implements View.OnClic
         Toolbar toolbar = (Toolbar) findViewById(R.id.show_toolbar);
         CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.restructure_fab);
-        TextView secretDetail = (TextView) findViewById(R.id.secret_details);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -50,17 +48,8 @@ public class SecretShowActivity extends AppCompatActivity implements View.OnClic
         }
         Secret secret = DataSupport.find(Secret.class, id, true);
         List<Member> memberList = secret.getMemberList();
-        StringBuffer secretBuffer = new StringBuffer();
-        secretBuffer.append("此秘密共有").append(secret.getAllParson()).append("个参与者，分为").append(secret.getAllLevel()).append("个等级\n");
-        for (int i = 0; i < memberList.size(); i++) {
-            secretBuffer.append("参与者“").append(memberList.get(i).getName()).append("”是等级").append(memberList.get(i).getLevel()).append("的第")
-                    .append(memberList.get(i).getParson()).append("个人，他所占有的子份额数是：").append(memberList.get(i).getShare()).append("\n");
-        }
-        String secretMember = secretBuffer.toString();
-        secretBuffer.setLength(0);
-        if (!"".equals(secretMember)) {
-            secretDetail.setText(secretMember);
-        }
+        SmartTable<Member> table = (SmartTable<Member>) findViewById(R.id.table);
+        table.setData(memberList);
         startTime = secret.getTimeOfStart();
         endTime = secret.getTimeOfEnd();
         actionButton.setOnClickListener(this);
