@@ -23,22 +23,22 @@ public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.Vi
 
     private List<Secretlist> mSecretlists;
 
-    public static final int VIEW_ITEM = 1;
-    public static final int VIEW_EMPTY = 0;
-    boolean empty=false;
+    private static final int VIEW_ITEM = 1;
+    private static final int VIEW_EMPTY = 0;
+    private boolean empty = false;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView secretName;
         View secretView;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             secretView = view;
             secretName = (TextView) view.findViewById(R.id.secret_list);
         }
     }
 
-    public SecretlistAdapter(List<Secretlist> secretlists) {
+    SecretlistAdapter(List<Secretlist> secretlists) {
         mSecretlists = secretlists;
     }
 
@@ -70,7 +70,7 @@ public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if(!empty) {
+        if (!empty) {
             Secretlist secretlist = mSecretlists.get(position);
             holder.secretName.setText(secretlist.getName());
         }
@@ -87,10 +87,10 @@ public class SecretlistAdapter extends RecyclerView.Adapter<SecretlistAdapter.Vi
     @Override
     public int getItemViewType(int position) {
         if (mSecretlists.size() == 0) {
-            empty=true;
+            empty = true;
             return VIEW_EMPTY;
         }
-        empty=false;
+        empty = false;
         return VIEW_ITEM;
     }
 
