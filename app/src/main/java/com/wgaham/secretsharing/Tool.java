@@ -16,7 +16,7 @@ import java.util.Random;
  * 一些工具函数
  *
  * @author Wgaham
- *         Created by zh on 2018/3/13.
+ * Created by zh on 2018/3/13.
  */
 
 public final class Tool {
@@ -28,7 +28,9 @@ public final class Tool {
 
     /**
      * 检测目前的时间是否符合重构时间
-     * startTime和endTime是从库中提取的字符串形式开始时间和结束时间
+     * startTime和endTime是从数据库中提取的字符串形式开始时间和结束时间
+     * @param startTime 开始时间
+     * @param endTime 结束时间
      */
     static boolean restructureTimeJudgment(String startTime, String endTime) {
 

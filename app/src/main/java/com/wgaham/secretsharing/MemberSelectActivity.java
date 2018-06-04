@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberSelectActivity extends AppCompatActivity implements View.OnClickListener {
-    private int id, secretValueFound;
+    private int secretValueFound;
     private String filePath;
     private CheckBox l01, l11, l12, l21, l22, l23;
     private TextView fileView;
@@ -49,7 +49,7 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         Intent intent = getIntent();
-        id = intent.getIntExtra(SecretShowActivity.SECRET_ID, 0);
+        int id = intent.getIntExtra(SecretShowActivity.SECRET_ID, 0);
         Secret secret = DataSupport.find(Secret.class, id, true);
         List<Member> memberList = secret.getMemberList();
         secretValueFound = secret.getSecret();
@@ -195,6 +195,7 @@ public class MemberSelectActivity extends AppCompatActivity implements View.OnCl
                 case FILE_REQUESTCODE:
                     Uri uri = data.getData();
                     filePath = Tool.getPathAfterKitKat(MemberSelectActivity.this, uri);
+                    assert filePath != null;
                     fileView.setText(filePath.substring(filePath.lastIndexOf("/") + 1));
 
 

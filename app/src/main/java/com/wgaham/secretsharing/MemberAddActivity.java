@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Random;
 
 public class MemberAddActivity extends AppCompatActivity implements View.OnClickListener {
-    private int secretValue;
 
     private String secretName, startTime, endTime, filePath;
 
@@ -69,7 +68,7 @@ public class MemberAddActivity extends AppCompatActivity implements View.OnClick
                 Convey convey = new Convey();
                 try {
                     FileEncryptAndDecrypt fileEncryptAndDecrypt = new FileEncryptAndDecrypt();
-                    secretValue = fileEncryptAndDecrypt.encrypt(filePath, Tool.randomIndexString());
+                    int secretValue = fileEncryptAndDecrypt.encrypt(filePath, Tool.randomIndexString());
                     int[] share = convey.Receivingserect(secretValue, 3, 6, strings, ints);
                     Member member01 = new Member();
                     Member member11 = new Member();
